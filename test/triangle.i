@@ -889,9 +889,10 @@ extern void __CrestInt(int* x) __attribute__((crest_skip));
 int main()
 {
   int side1,side2,side3;
-  __CrestInt(&side1);
-  __CrestInt(&side2);
-  __CrestInt(&side3);
+__CrestInt(&side1);
+__CrestInt(&side2);
+__CrestInt(&side3);
+
 
   if(side1<0 || side2<0 || side3<0)
     printf("Illegal arguments !! \n");

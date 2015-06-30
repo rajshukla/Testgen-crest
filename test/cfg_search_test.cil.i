@@ -98,91 +98,110 @@ int main(void)
   __CrestStore(3, (unsigned long )(& i));
 # 21 "cfg_search_test.c"
   i = 0;
-# 21 "cfg_search_test.c"
-  while (1) {
-    while_continue: ;
-    {
-    __CrestLoad(6, (unsigned long )(& i), (long long )i);
-    __CrestLoad(5, (unsigned long )0, (long long )200);
-    __CrestApply2(4, 16, (long long )(i < 200));
-# 21 "cfg_search_test.c"
-    if (i < 200) {
-      __CrestBranch(7, 6, 1);
-
-    } else {
-      __CrestBranch(8, 7, 0);
-# 21 "cfg_search_test.c"
-      goto while_break;
-    }
-    }
+  __CrestLoad(6, (unsigned long )(& i), (long long )i);
+  __CrestLoad(5, (unsigned long )0, (long long )200);
+  __CrestApply2(4, 16, (long long )(i < 200));
+  if (i < 200) {
+    __CrestBranch(7, 4, 1);
     __CrestLoad(9, (unsigned long )0, (long long )400);
     __CrestStore(10, (unsigned long )(& data[i]));
-# 22 "cfg_search_test.c"
     data[i] = 400;
     __CrestLoad(13, (unsigned long )(& i), (long long )i);
     __CrestLoad(12, (unsigned long )0, (long long )1);
     __CrestApply2(11, 0, (long long )(i + 1));
     __CrestStore(14, (unsigned long )(& i));
-# 21 "cfg_search_test.c"
     i ++;
+  } else {
+    __CrestBranch(8, 5, 0);
+
   }
-  while_break:
-  __CrestLoad(15, (unsigned long )0, (long long )13);
-  __CrestStore(16, (unsigned long )(& data[100]));
+  __CrestLoad(17, (unsigned long )(& i), (long long )i);
+  __CrestLoad(16, (unsigned long )0, (long long )200);
+  __CrestApply2(15, 16, (long long )(i < 200));
+  if (i < 200) {
+    __CrestBranch(18, 7, 1);
+    __CrestLoad(20, (unsigned long )0, (long long )400);
+    __CrestStore(21, (unsigned long )(& data[i]));
+    data[i] = 400;
+    __CrestLoad(24, (unsigned long )(& i), (long long )i);
+    __CrestLoad(23, (unsigned long )0, (long long )1);
+    __CrestApply2(22, 0, (long long )(i + 1));
+    __CrestStore(25, (unsigned long )(& i));
+    i ++;
+  } else {
+    __CrestBranch(19, 8, 0);
+
+  }
+  __CrestLoad(26, (unsigned long )0, (long long )13);
+  __CrestStore(27, (unsigned long )(& data[100]));
 # 24 "cfg_search_test.c"
   data[100] = 13;
-  __CrestLoad(17, (unsigned long )0, (long long )0);
-  __CrestStore(18, (unsigned long )(& i___0));
+  __CrestLoad(28, (unsigned long )0, (long long )0);
+  __CrestStore(29, (unsigned long )(& i___0));
 # 26 "cfg_search_test.c"
   i___0 = 0;
-# 26 "cfg_search_test.c"
-  while (1) {
-    while_continue___0: ;
+  __CrestLoad(32, (unsigned long )(& i___0), (long long )i___0);
+  __CrestLoad(31, (unsigned long )0, (long long )200);
+  __CrestApply2(30, 16, (long long )(i___0 < 200));
+  if (i___0 < 200) {
+    __CrestBranch(33, 12, 1);
     {
-    __CrestLoad(21, (unsigned long )(& i___0), (long long )i___0);
-    __CrestLoad(20, (unsigned long )0, (long long )200);
-    __CrestApply2(19, 16, (long long )(i___0 < 200));
-# 26 "cfg_search_test.c"
-    if (i___0 < 200) {
-      __CrestBranch(22, 15, 1);
-
-    } else {
-      __CrestBranch(23, 16, 0);
-# 26 "cfg_search_test.c"
-      goto while_break___0;
-    }
-    }
-    {
-    __CrestLoad(26, (unsigned long )(& c), (long long )c);
-    __CrestLoad(25, (unsigned long )(& data[i___0]), (long long )data[i___0]);
-    __CrestApply2(24, 12, (long long )((int )c == data[i___0]));
-# 28 "cfg_search_test.c"
+    __CrestLoad(37, (unsigned long )(& c), (long long )c);
+    __CrestLoad(36, (unsigned long )(& data[i___0]), (long long )data[i___0]);
+    __CrestApply2(35, 12, (long long )((int )c == data[i___0]));
     if ((int )c == data[i___0]) {
-      __CrestBranch(27, 18, 1);
-# 29 "cfg_search_test.c"
+      __CrestBranch(38, 13, 1);
       fprintf((FILE * __restrict )stderr, (char const * __restrict )"GOAL!\n");
-      __CrestClearStack(29);
+      __CrestClearStack(40);
     } else {
-      __CrestBranch(28, 19, 0);
+      __CrestBranch(39, 14, 0);
 
     }
     }
-# 34 "cfg_search_test.c"
     __CrestInt(& a);
-    __CrestLoad(32, (unsigned long )(& i___0), (long long )i___0);
-    __CrestLoad(31, (unsigned long )0, (long long )1);
-    __CrestApply2(30, 0, (long long )(i___0 + 1));
-    __CrestStore(33, (unsigned long )(& i___0));
-# 26 "cfg_search_test.c"
+    __CrestLoad(43, (unsigned long )(& i___0), (long long )i___0);
+    __CrestLoad(42, (unsigned long )0, (long long )1);
+    __CrestApply2(41, 0, (long long )(i___0 + 1));
+    __CrestStore(44, (unsigned long )(& i___0));
     i___0 ++;
+  } else {
+    __CrestBranch(34, 16, 0);
+
   }
-  while_break___0:
-  __CrestLoad(34, (unsigned long )0, (long long )0);
-  __CrestStore(35, (unsigned long )(& __retres5));
+  __CrestLoad(47, (unsigned long )(& i___0), (long long )i___0);
+  __CrestLoad(46, (unsigned long )0, (long long )200);
+  __CrestApply2(45, 16, (long long )(i___0 < 200));
+  if (i___0 < 200) {
+    __CrestBranch(48, 18, 1);
+    {
+    __CrestLoad(52, (unsigned long )(& c), (long long )c);
+    __CrestLoad(51, (unsigned long )(& data[i___0]), (long long )data[i___0]);
+    __CrestApply2(50, 12, (long long )((int )c == data[i___0]));
+    if ((int )c == data[i___0]) {
+      __CrestBranch(53, 19, 1);
+      fprintf((FILE * __restrict )stderr, (char const * __restrict )"GOAL!\n");
+      __CrestClearStack(55);
+    } else {
+      __CrestBranch(54, 20, 0);
+
+    }
+    }
+    __CrestInt(& a);
+    __CrestLoad(58, (unsigned long )(& i___0), (long long )i___0);
+    __CrestLoad(57, (unsigned long )0, (long long )1);
+    __CrestApply2(56, 0, (long long )(i___0 + 1));
+    __CrestStore(59, (unsigned long )(& i___0));
+    i___0 ++;
+  } else {
+    __CrestBranch(49, 22, 0);
+
+  }
+  __CrestLoad(60, (unsigned long )0, (long long )0);
+  __CrestStore(61, (unsigned long )(& __retres5));
 # 38 "cfg_search_test.c"
   __retres5 = 0;
-  __CrestLoad(36, (unsigned long )(& __retres5), (long long )__retres5);
-  __CrestReturn(37);
+  __CrestLoad(62, (unsigned long )(& __retres5), (long long )__retres5);
+  __CrestReturn(63);
 # 17 "cfg_search_test.c"
   return (__retres5);
 }

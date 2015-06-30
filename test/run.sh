@@ -1,16 +1,5 @@
 
 
-rm ../lib/libcrest.a
-rm ../bin/run_crest
-rm ../bin/process_cfg
-rm ../bin/print_execution
-rm ../include/crest.h
-
-cd ../src/
-
-make
-
-cd ../test/
 
 #removing previous results
 rm resultAfter.txt

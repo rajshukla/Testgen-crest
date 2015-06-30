@@ -292,6 +292,21 @@ class CfgHeuristicSearch : public Search {
 };
 
 
+class LevelSearch_ : public Search {
+ public:
+  explicit LevelSearch_(const string& program,
+				   int max_iterations);
+				   
+  virtual ~LevelSearch_();
+
+  virtual void Run();
+
+ private:
+  
+
+  void Level(size_t pos, SymbolicExecution& prev_ex);
+};
+
 class LevelSearch : public Search {
  public:
   explicit LevelSearch(const string& program,
@@ -305,8 +320,9 @@ class LevelSearch : public Search {
   
 
   void Level(int lev, SymbolicExecution& prev_ex);
-  bool NegateBranch(const SymbolicExecution& ex,size_t branch_idx);
-  bool SolveNewPath(const SymbolicExecution& ex, vector<value_t>* input );
+  //bool NegateBranch(const SymbolicExecution& ex,size_t branch_idx);
+  //bool SolveNewPath(const SymbolicExecution& ex, vector<value_t>* input );
+  bool Solve(const SymbolicExecution& ex,int level,vector<value_t>* input );
 };
 
 }  // namespace crest

@@ -4,9 +4,10 @@
 int main()
 {
   int side1,side2,side3;
-  CREST_int(side1);
-  CREST_int(side2);
-  CREST_int(side3);  
+CREST_int(side1);
+CREST_int(side2);
+CREST_int(side3);
+  
  
   if(side1<0 || side2<0 || side3<0)
     printf("Illegal arguments !! \n");

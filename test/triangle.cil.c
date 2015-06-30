@@ -38,10 +38,10 @@ int main(void)
   __CrestLoad(4, (unsigned long )(& side1), (long long )side1);
   __CrestLoad(3, (unsigned long )0, (long long )0);
   __CrestApply2(2, 16, (long long )(side1 < 0));
-#line 11
+#line 12
   if (side1 < 0) {
     __CrestBranch(5, 3, 1);
-#line 12
+#line 13
     printf((char const   * __restrict  )"Illegal arguments !! \n");
     __CrestClearStack(7);
   } else {
@@ -50,10 +50,10 @@ int main(void)
     __CrestLoad(10, (unsigned long )(& side2), (long long )side2);
     __CrestLoad(9, (unsigned long )0, (long long )0);
     __CrestApply2(8, 16, (long long )(side2 < 0));
-#line 11
+#line 12
     if (side2 < 0) {
       __CrestBranch(11, 5, 1);
-#line 12
+#line 13
       printf((char const   * __restrict  )"Illegal arguments !! \n");
       __CrestClearStack(13);
     } else {
@@ -62,34 +62,34 @@ int main(void)
       __CrestLoad(16, (unsigned long )(& side3), (long long )side3);
       __CrestLoad(15, (unsigned long )0, (long long )0);
       __CrestApply2(14, 16, (long long )(side3 < 0));
-#line 11
+#line 12
       if (side3 < 0) {
         __CrestBranch(17, 7, 1);
-#line 12
+#line 13
         printf((char const   * __restrict  )"Illegal arguments !! \n");
         __CrestClearStack(19);
       } else {
         __CrestBranch(18, 8, 0);
         __CrestLoad(20, (unsigned long )0, (long long )0);
         __CrestStore(21, (unsigned long )(& triang));
-#line 15
+#line 16
         triang = 0;
         {
         __CrestLoad(24, (unsigned long )(& side1), (long long )side1);
         __CrestLoad(23, (unsigned long )(& side2), (long long )side2);
         __CrestApply2(22, 12, (long long )(side1 == side2));
-#line 16
+#line 17
         if (side1 == side2) {
           __CrestBranch(25, 10, 1);
           __CrestLoad(29, (unsigned long )(& triang), (long long )triang);
           __CrestLoad(28, (unsigned long )0, (long long )1);
           __CrestApply2(27, 0, (long long )(triang + 1));
           __CrestStore(30, (unsigned long )(& triang));
-#line 17
+#line 18
           triang ++;
         } else {
           __CrestBranch(26, 11, 0);
-#line 20
+#line 21
           printf((char const   * __restrict  )"not equal side1 and side2 \n");
           __CrestClearStack(31);
         }
@@ -98,18 +98,18 @@ int main(void)
         __CrestLoad(34, (unsigned long )(& side2), (long long )side2);
         __CrestLoad(33, (unsigned long )(& side3), (long long )side3);
         __CrestApply2(32, 12, (long long )(side2 == side3));
-#line 22
+#line 23
         if (side2 == side3) {
           __CrestBranch(35, 13, 1);
           __CrestLoad(39, (unsigned long )(& triang), (long long )triang);
           __CrestLoad(38, (unsigned long )0, (long long )2);
           __CrestApply2(37, 0, (long long )(triang + 2));
           __CrestStore(40, (unsigned long )(& triang));
-#line 23
+#line 24
           triang += 2;
         } else {
           __CrestBranch(36, 14, 0);
-#line 25
+#line 26
           printf((char const   * __restrict  )"not equal side2 and side3 \n");
           __CrestClearStack(41);
         }
@@ -118,18 +118,18 @@ int main(void)
         __CrestLoad(44, (unsigned long )(& side1), (long long )side1);
         __CrestLoad(43, (unsigned long )(& side3), (long long )side3);
         __CrestApply2(42, 12, (long long )(side1 == side3));
-#line 27
+#line 28
         if (side1 == side3) {
           __CrestBranch(45, 16, 1);
           __CrestLoad(49, (unsigned long )(& triang), (long long )triang);
           __CrestLoad(48, (unsigned long )0, (long long )3);
           __CrestApply2(47, 0, (long long )(triang + 3));
           __CrestStore(50, (unsigned long )(& triang));
-#line 28
+#line 29
           triang += 3;
         } else {
           __CrestBranch(46, 17, 0);
-#line 30
+#line 31
           printf((char const   * __restrict  )"not equal side1 and side3 \n");
           __CrestClearStack(51);
         }
@@ -138,7 +138,7 @@ int main(void)
         __CrestLoad(53, (unsigned long )(& side2), (long long )side2);
         __CrestLoad(54, (unsigned long )(& side3), (long long )side3);
         __CrestLoad(55, (unsigned long )(& triang), (long long )triang);
-#line 32
+#line 33
         printf((char const   * __restrict  )"side1=%d, side2=%d, side3=%d, triang = %d\n",
                side1, side2, side3, triang);
         __CrestClearStack(56);
@@ -146,7 +146,7 @@ int main(void)
         __CrestLoad(59, (unsigned long )(& triang), (long long )triang);
         __CrestLoad(58, (unsigned long )0, (long long )0);
         __CrestApply2(57, 12, (long long )(triang == 0));
-#line 34
+#line 35
         if (triang == 0) {
           __CrestBranch(60, 20, 1);
           {
@@ -155,10 +155,10 @@ int main(void)
           __CrestApply2(64, 0, (long long )(side1 + side2));
           __CrestLoad(63, (unsigned long )(& side3), (long long )side3);
           __CrestApply2(62, 16, (long long )(side1 + side2 < side3));
-#line 36
+#line 37
           if (side1 + side2 < side3) {
             __CrestBranch(67, 21, 1);
-#line 37
+#line 38
             printf((char const   * __restrict  )"Illegal arguments !! \n");
             __CrestClearStack(69);
           } else {
@@ -169,10 +169,10 @@ int main(void)
             __CrestApply2(72, 0, (long long )(side2 + side3));
             __CrestLoad(71, (unsigned long )(& side1), (long long )side1);
             __CrestApply2(70, 16, (long long )(side2 + side3 < side1));
-#line 36
+#line 37
             if (side2 + side3 < side1) {
               __CrestBranch(75, 23, 1);
-#line 37
+#line 38
               printf((char const   * __restrict  )"Illegal arguments !! \n");
               __CrestClearStack(77);
             } else {
@@ -183,15 +183,15 @@ int main(void)
               __CrestApply2(80, 0, (long long )(side1 + side2));
               __CrestLoad(79, (unsigned long )(& side3), (long long )side3);
               __CrestApply2(78, 16, (long long )(side1 + side2 < side3));
-#line 36
+#line 37
               if (side1 + side2 < side3) {
                 __CrestBranch(83, 25, 1);
-#line 37
+#line 38
                 printf((char const   * __restrict  )"Illegal arguments !! \n");
                 __CrestClearStack(85);
               } else {
                 __CrestBranch(84, 26, 0);
-#line 39
+#line 40
                 printf((char const   * __restrict  )"Scalene triangle \n");
                 __CrestClearStack(86);
               }
@@ -206,10 +206,10 @@ int main(void)
           __CrestLoad(89, (unsigned long )(& triang), (long long )triang);
           __CrestLoad(88, (unsigned long )0, (long long )3);
           __CrestApply2(87, 14, (long long )(triang > 3));
-#line 43
+#line 44
           if (triang > 3) {
             __CrestBranch(90, 28, 1);
-#line 44
+#line 45
             printf((char const   * __restrict  )"Equilateral triangle \n");
             __CrestClearStack(92);
           } else {
@@ -218,7 +218,7 @@ int main(void)
             __CrestLoad(95, (unsigned long )(& triang), (long long )triang);
             __CrestLoad(94, (unsigned long )0, (long long )1);
             __CrestApply2(93, 12, (long long )(triang == 1));
-#line 47
+#line 48
             if (triang == 1) {
               __CrestBranch(96, 30, 1);
               {
@@ -227,15 +227,15 @@ int main(void)
               __CrestApply2(100, 0, (long long )(side1 + side2));
               __CrestLoad(99, (unsigned long )(& side3), (long long )side3);
               __CrestApply2(98, 14, (long long )(side1 + side2 > side3));
-#line 47
+#line 48
               if (side1 + side2 > side3) {
                 __CrestBranch(103, 31, 1);
-#line 48
+#line 49
                 printf((char const   * __restrict  )"Isosceles triangle \n");
                 __CrestClearStack(105);
               } else {
                 __CrestBranch(104, 32, 0);
-#line 47
+#line 48
                 goto _L___0;
               }
               }
@@ -246,7 +246,7 @@ int main(void)
               __CrestLoad(108, (unsigned long )(& triang), (long long )triang);
               __CrestLoad(107, (unsigned long )0, (long long )2);
               __CrestApply2(106, 12, (long long )(triang == 2));
-#line 51
+#line 52
               if (triang == 2) {
                 __CrestBranch(109, 34, 1);
                 {
@@ -255,15 +255,15 @@ int main(void)
                 __CrestApply2(113, 0, (long long )(side2 + side3));
                 __CrestLoad(112, (unsigned long )(& side1), (long long )side1);
                 __CrestApply2(111, 14, (long long )(side2 + side3 > side1));
-#line 51
+#line 52
                 if (side2 + side3 > side1) {
                   __CrestBranch(116, 35, 1);
-#line 52
+#line 53
                   printf((char const   * __restrict  )"Isosceles triangle \n");
                   __CrestClearStack(118);
                 } else {
                   __CrestBranch(117, 36, 0);
-#line 51
+#line 52
                   goto _L;
                 }
                 }
@@ -274,7 +274,7 @@ int main(void)
                 __CrestLoad(121, (unsigned long )(& triang), (long long )triang);
                 __CrestLoad(120, (unsigned long )0, (long long )3);
                 __CrestApply2(119, 12, (long long )(triang == 3));
-#line 55
+#line 56
                 if (triang == 3) {
                   __CrestBranch(122, 38, 1);
                   {
@@ -283,22 +283,22 @@ int main(void)
                   __CrestApply2(126, 0, (long long )(side1 + side3));
                   __CrestLoad(125, (unsigned long )(& side2), (long long )side2);
                   __CrestApply2(124, 14, (long long )(side1 + side3 > side2));
-#line 55
+#line 56
                   if (side1 + side3 > side2) {
                     __CrestBranch(129, 39, 1);
-#line 56
+#line 57
                     printf((char const   * __restrict  )"Isosceles triangle \n");
                     __CrestClearStack(131);
                   } else {
                     __CrestBranch(130, 40, 0);
-#line 58
+#line 59
                     printf((char const   * __restrict  )"ILLegal !!! \n");
                     __CrestClearStack(132);
                   }
                   }
                 } else {
                   __CrestBranch(123, 41, 0);
-#line 58
+#line 59
                   printf((char const   * __restrict  )"ILLegal !!! \n");
                   __CrestClearStack(133);
                 }
@@ -318,7 +318,7 @@ int main(void)
   }
   __CrestLoad(134, (unsigned long )0, (long long )0);
   __CrestStore(135, (unsigned long )(& __retres5));
-#line 67
+#line 68
   __retres5 = 0;
   __CrestLoad(136, (unsigned long )(& __retres5), (long long )__retres5);
   __CrestReturn(137);

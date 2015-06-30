@@ -1,5 +1,5 @@
 
-YICES_DIR=/home/jayant/yices-1.0.40
+YICES_DIR=/home/raj/Desktop/RAJ/yices-1.0.40
 
 CC=$(CXX)
 CFLAGS = -I. -I$(YICES_DIR)/include -Wall -O2 -Wno-deprecated -Wattributes

@@ -47,7 +47,9 @@ int main(int argc, char* argv[]) {
   }
 
   crest::Search* strategy;
-  if (search_type == "-level"){
+  if (search_type == "-level_search"){
+    strategy = new crest ::LevelSearch_(prog, num_iters);}
+  else if (search_type == "-level"){
     strategy = new crest::LevelSearch(prog, num_iters);}
   else if (search_type == "-random") {
     strategy = new crest::RandomSearch(prog, num_iters);

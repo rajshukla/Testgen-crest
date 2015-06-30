@@ -366,7 +366,7 @@ bool Search::SolveAtBranch(const SymbolicExecution& ex,
   if (success) {
     // Merge the solution with the previous input to get the next
     // input.  (Could merge with random inputs, instead.)
-    *input = ex.inputs();
+    *input = ex.inputs(); 
     // RandomInput(ex.vars(), input);
 
     typedef map<var_t,value_t>::const_iterator SolnIt;
@@ -1499,9 +1499,95 @@ bool CfgHeuristicSearch::DoBoundedBFS(int i, int depth, const SymbolicExecution&
   return false;
 }
 
-//////////////////////Levelling Module////////////////////////
-///////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
+
+
+////////////////////LevelSearch (One by one flipping)///////////////
+///////////////////////////////////////////////////
+
+LevelSearch_::LevelSearch_
+(const string& program, int max_iterations)
+  : Search(program, max_iterations) { }
+
+LevelSearch_::~LevelSearch_() { }
+
+void LevelSearch_::Run() {
+  // Initial execution (on empty/random inputs).
+  SymbolicExecution ex;
+  RunProgram(vector<value_t>(), &ex);
+  UpdateCoverage(ex);
+
+  Level(0 , ex);
+  // DFS(0, ex);
+}
+
+
+
+
+void LevelSearch_::Level(size_t pos , SymbolicExecution& prev_ex) {
+  int level ;
+  int curr_branch_level ;
+
+  const vector<branch_id_t>& branches = prev_ex.path().branches();
+  SymbolicExecution cur_ex;
+  vector<value_t> input;
+
+  const SymbolicPath& path = prev_ex.path();
+ //for(level =1; level<5; level++){
+  //printf("Level =%d\n",level);
+
+
+for(level = 1 ; level<= maxLevel() ;level ++){
+printf("\n####Level =%d\n", level) ;
+
+  for (size_t i = pos; (i < path.constraints().size()) ; i++) {
+     //Solve constraints[0..i].
+    printf("Path constraints size %d\n", path.constraints().size());
+    printf("Position = %d\n", i);
+    
+    for (BranchIt j = branches.begin(); j != branches.end(); ++j){
+   //printf("@@@@@@@@@@@@Current Branch Level = %d", findLevel(10)) ;
+    printf("Branches =%d ", *j); }
+
+    int check = 0 ;
+      
+    for(BranchIt i_ = branches.begin(); i_ != branches.end(); ++i_  ){
+      printf("Position and Check  %d%d\n", i, check) ;
+      if(*i_ <0) continue;
+      if(i == check){ curr_branch_level = findLevel(*i_) ;  printf("Level is #######################################%d\n", findLevel(*i_)) ;  break ;}
+      check ++;
+     }
+    
+
+       if (curr_branch_level == level ){
+       if (!SolveAtBranch(prev_ex, i, &input)) {
+       continue;
+       } }
+
+    // Run on those constraints.
+    RunProgram(input, &cur_ex);
+    UpdateCoverage(cur_ex);
+
+    // Check for prediction failure.
+    size_t branch_idx = path.constraints_idx()[i];
+    if (!CheckPrediction(prev_ex, cur_ex, branch_idx)) {
+      fprintf(stderr, "Prediction failed!\n");
+      continue;
+    }
+
+    // We successfully solved the branch, recurse.
+    
+    Level(i+1,  cur_ex);
+  }
+
+ }
+
+ }
+
+
+
+
+////////////////////Levelling Module///////////////
+///////////////////////////////////////////////////
 
 LevelSearch::LevelSearch
 (const string& program, int max_iterations)
@@ -1517,50 +1603,76 @@ void LevelSearch::Run() {
   UpdateCoverage(ex);
 
   Level(1, ex);
-  // DFS(0, ex);
 }
 
-bool LevelSearch::NegateBranch(const SymbolicExecution& ex,size_t branch_idx){
-  const vector<SymbolicPred*>& constraints = ex.path().constraints();
+bool LevelSearch::Solve(const SymbolicExecution& ex, int level ,vector<value_t>* input ){
 
-  // Optimization: If any of the previous constraints are idential to the
-  // branch_idx-th constraint, immediately return false.
-  for (int i = static_cast<int>(branch_idx) - 1; i >= 0; i--) {
-    if (constraints[branch_idx]->Equal(*constraints[i]))
-      return false;
+  const vector<SymbolicPred*>& constraints = ex.path().constraints();
+  const SymbolicPath& path = ex.path();
+  const vector<branch_id_t>& branches = ex.path().branches();
+
+  int curr_branch_level=0;
+
+  size_t j;
+  for (j = 0; (j < path.constraints().size()) ; j++){  // for every constraint get the branchlevel for the branch at the same position
+
+      int k=0;
+      for(BranchIt branch_ = branches.begin(); branch_ != branches.end(); ++branch_ ){
+        if(*branch_ <0) continue;
+        if((int)j == k){ 
+          curr_branch_level = findLevel(*branch_) ;  
+          break ;
+        }
+        k++;
+      }
+
+      if (curr_branch_level == level ){
+        // Optimization: If any of the previous constraints are idential to the
+        // branch_idx-th constraint, immediately return false.
+        for (int i = static_cast<int>(j) - 1; i >= 0; i--) {
+          if (constraints[j]->Equal(*constraints[i]))
+          return false;
+        }
+         constraints[j]->Negate();
+      }
+
   }
 
-  constraints[branch_idx]->Negate();
-  return true;
+  //fprintf(stderr,"\n%d\n",constraints.size());
 
-}
-
-bool LevelSearch::SolveNewPath(const SymbolicExecution& ex, vector<value_t>* input ){
-  const vector<SymbolicPred*>& constraints = ex.path().constraints();
-
-  // Optimization: If any of the previous constraints are idential to the
-  // branch_idx-th constraint, immediately return false.
-  /*for (int i = static_cast<int>(branch_idx) - 1; i >= 0; i--) {
-    if (constraints[branch_idx]->Equal(*constraints[i]))
-      return false;
-  }*/
-/*
-  vector<const SymbolicPred*> cs(constraints.begin(),
-         constraints.begin()+branch_idx+1);
-  map<var_t,value_t> soln;*/
-  
   vector<const SymbolicPred*> cs(constraints.begin(),
          constraints.end());
-  map<var_t,value_t> soln;
 
+  map<var_t,value_t> soln;
   fprintf(stderr, "Yices . . . ");
   bool success = YicesSolver::IncrementalSolve(ex.inputs(), ex.vars(), cs, &soln);
-  fprintf(stderr, "%d %d\n",int(ex.inputs().size()), success);
+  fprintf(stderr, "%d\n", success);
+
+  curr_branch_level=0;
+
+  for (size_t j = 0; (j < path.constraints().size()) ; j++){  // for every constraint get the branchlevel for the branch at the same position
+
+      int k=0;
+      for(BranchIt branch_ = branches.begin(); branch_ != branches.end(); ++branch_ ){
+        if(*branch_ <0) continue;
+        if((int)j == k){ 
+          curr_branch_level = findLevel(*branch_) ;  
+          break ;
+        }
+        k++;
+      }
+
+      if (curr_branch_level == level ){
+        constraints[j]->Negate();
+      }
+
+  }
+
 
   if (success) {
     // Merge the solution with the previous input to get the next
     // input.  (Could merge with random inputs, instead.)
-    *input = ex.inputs();
+    *input = ex.inputs(); 
     // RandomInput(ex.vars(), input);
 
     typedef map<var_t,value_t>::const_iterator SolnIt;
@@ -1576,64 +1688,25 @@ bool LevelSearch::SolveNewPath(const SymbolicExecution& ex, vector<value_t>* inp
 
 void LevelSearch::Level(int lev , SymbolicExecution& cur_ex){
 
-  const vector<branch_id_t>& branches = cur_ex.path().branches();
-
-  int curr_branch_level=0;
-
-  //SymbolicExecution new_ex;
+  SymbolicExecution& temp_ex=cur_ex;
 
   vector<value_t> input;
 
-  const SymbolicPath& path = cur_ex.path();
+  //const SymbolicPath& path = cur_ex.path();
 
-  for(int i=0;i<=(maxLevel()-lev+1);i++){
-    
-    //negate all branches of (level+i)th level
+  for(int i=0;i<=(maxLevel()-lev);i++){
 
-    for (size_t j = 0; (j < path.constraints().size()) ; j++){  // for every constraint get the branchlevel for the branch at the same position
-
-      int k=0;
-      for(BranchIt branch_ = branches.begin(); branch_ != branches.end(); ++branch_ ){
-        if(*branch_ <0) continue;
-        if(i == k){ 
-          curr_branch_level = findLevel(*branch_) ;  
-          break ;
-        }
-        k++;
-      }
-
-      if (curr_branch_level == lev+i ){
-        NegateBranch(cur_ex, j );
-      }
-
+    //CALL FUNCTION THAT DOES NEGATION AND SOLVING ON ITS OWN
+    if(Solve(cur_ex,lev+i,&input)){
+  
+      RunProgram(input, &cur_ex);
+      UpdateCoverage(cur_ex);
     }
-
-    //Solve the new Path , Run program and Update Coverage
-    SolveNewPath(cur_ex, &input);
-    RunProgram(input, &cur_ex);
-    UpdateCoverage(cur_ex);
-
     //Recursive Call
     Level(lev+1,cur_ex);
 
-    //negate again to get the original path again(should be same as before)
-    for (size_t j = 0; (j < path.constraints().size()) ; j++){  // for every constraint get the branchlevel for the branch at the same position
+    cur_ex=temp_ex;
 
-      int k=0;
-      for(BranchIt branch_ = branches.begin(); branch_ != branches.end(); ++branch_ ){
-        if(*branch_ <0) continue;
-        if(i == k){ 
-          curr_branch_level = findLevel(*branch_) ;  
-          break ;
-        }
-        k++;
-      }
-
-      if (curr_branch_level == lev+i ){
-        NegateBranch(cur_ex, j );
-      }
-
-    }
   }
 }
 

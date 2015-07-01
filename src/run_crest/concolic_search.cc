@@ -1687,25 +1687,36 @@ bool LevelSearch::Solve(const SymbolicExecution& ex, int level ,vector<value_t>*
 }
 
 void LevelSearch::Level(int lev , SymbolicExecution& cur_ex){
-
-  SymbolicExecution& temp_ex=cur_ex;
+  
+  SymbolicExecution temp_ex;
 
   vector<value_t> input;
 
   //const SymbolicPath& path = cur_ex.path();
+
+  //const vector<branch_id_t>& branches = cur_ex.path().branches();
 
   for(int i=0;i<=(maxLevel()-lev);i++){
 
     //CALL FUNCTION THAT DOES NEGATION AND SOLVING ON ITS OWN
     if(Solve(cur_ex,lev+i,&input)){
   
-      RunProgram(input, &cur_ex);
-      UpdateCoverage(cur_ex);
+      RunProgram(input, &temp_ex);
+      UpdateCoverage(temp_ex);
     }
-    //Recursive Call
-    Level(lev+1,cur_ex);
 
-    cur_ex=temp_ex;
+
+/*
+      for (BranchIt j = branches.begin(); j != branches.end(); ++j){
+      //printf("#######Current Branch Level = %d", findLevel(10)) ;
+      printf("Branches =%d ", *j); 
+      }*/
+
+
+    //Recursive Call
+    Level(lev+1,temp_ex);
+
+    //cur_ex=temp_ex;
 
   }
 }

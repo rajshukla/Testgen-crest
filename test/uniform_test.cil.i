@@ -76,6 +76,32 @@ extern struct _IO_FILE *stderr ;
 # 356 "/usr/include/stdio.h"
 extern int fprintf(FILE * __restrict __stream , char const * __restrict __format
                    , ...) ;
+void createCDG(void)
+{
+
+
+  {
+  __CrestCall(1, 1);
+
+  {
+  __CrestReturn(2);
+  return;
+  }
+}
+}
+void isCopyOfHolder(void)
+{
+
+
+  {
+  __CrestCall(3, 2);
+
+  {
+  __CrestReturn(4);
+  return;
+  }
+}
+}
 # 15 "uniform_test.c"
 int main(void)
 {
@@ -87,7 +113,7 @@ int main(void)
 
   {
   __globinit_uniform_test();
-  __CrestCall(1, 1);
+  __CrestCall(5, 3);
 # 17 "uniform_test.c"
   __CrestInt(& a);
 # 18 "uniform_test.c"
@@ -96,61 +122,61 @@ int main(void)
   __CrestInt(& c);
 # 20 "uniform_test.c"
   __CrestInt(& d);
-  __CrestLoad(4, (unsigned long )(& a), (long long )a);
-  __CrestLoad(3, (unsigned long )0, (long long )5);
-  __CrestApply2(2, 12, (long long )(a == 5));
+  __CrestLoad(8, (unsigned long )(& a), (long long )a);
+  __CrestLoad(7, (unsigned long )0, (long long )5);
+  __CrestApply2(6, 12, (long long )(a == 5));
 # 21 "uniform_test.c"
   if (a == 5) {
-    __CrestBranch(5, 3, 1);
+    __CrestBranch(9, 5, 1);
     {
-    __CrestLoad(9, (unsigned long )(& b), (long long )b);
-    __CrestLoad(8, (unsigned long )0, (long long )19);
-    __CrestApply2(7, 12, (long long )(b == 19));
+    __CrestLoad(13, (unsigned long )(& b), (long long )b);
+    __CrestLoad(12, (unsigned long )0, (long long )19);
+    __CrestApply2(11, 12, (long long )(b == 19));
 # 22 "uniform_test.c"
     if (b == 19) {
-      __CrestBranch(10, 4, 1);
+      __CrestBranch(14, 6, 1);
       {
-      __CrestLoad(14, (unsigned long )(& c), (long long )c);
-      __CrestLoad(13, (unsigned long )0, (long long )7);
-      __CrestApply2(12, 12, (long long )(c == 7));
+      __CrestLoad(18, (unsigned long )(& c), (long long )c);
+      __CrestLoad(17, (unsigned long )0, (long long )7);
+      __CrestApply2(16, 12, (long long )(c == 7));
 # 23 "uniform_test.c"
       if (c == 7) {
-        __CrestBranch(15, 5, 1);
+        __CrestBranch(19, 7, 1);
         {
-        __CrestLoad(19, (unsigned long )(& d), (long long )d);
-        __CrestLoad(18, (unsigned long )0, (long long )4);
-        __CrestApply2(17, 12, (long long )(d == 4));
+        __CrestLoad(23, (unsigned long )(& d), (long long )d);
+        __CrestLoad(22, (unsigned long )0, (long long )4);
+        __CrestApply2(21, 12, (long long )(d == 4));
 # 24 "uniform_test.c"
         if (d == 4) {
-          __CrestBranch(20, 6, 1);
+          __CrestBranch(24, 8, 1);
 # 25 "uniform_test.c"
           fprintf((FILE * __restrict )stderr, (char const * __restrict )"GOAL!\n");
-          __CrestClearStack(22);
+          __CrestClearStack(26);
         } else {
-          __CrestBranch(21, 7, 0);
+          __CrestBranch(25, 9, 0);
 
         }
         }
       } else {
-        __CrestBranch(16, 8, 0);
+        __CrestBranch(20, 10, 0);
 
       }
       }
     } else {
-      __CrestBranch(11, 9, 0);
+      __CrestBranch(15, 11, 0);
 
     }
     }
   } else {
-    __CrestBranch(6, 10, 0);
+    __CrestBranch(10, 12, 0);
 
   }
-  __CrestLoad(23, (unsigned long )0, (long long )0);
-  __CrestStore(24, (unsigned long )(& __retres5));
+  __CrestLoad(27, (unsigned long )0, (long long )0);
+  __CrestStore(28, (unsigned long )(& __retres5));
 # 31 "uniform_test.c"
   __retres5 = 0;
-  __CrestLoad(25, (unsigned long )(& __retres5), (long long )__retres5);
-  __CrestReturn(26);
+  __CrestLoad(29, (unsigned long )(& __retres5), (long long )__retres5);
+  __CrestReturn(30);
 # 15 "uniform_test.c"
   return (__retres5);
 }

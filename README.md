@@ -54,9 +54,7 @@ Example commands to test the "test/uniform_test.c" program:
 
     (optional) (a sixth argument - max depth) (can be used for dfs or uniform_random)
 
-    or just copy run.sh from parent directory into your folder(test): 
-    use the following command (runs the same set of commands) from your directory(test) :
-    ./run.sh uniform_test 10 dfs 0 (or    ./run.sh uniform_test 10 dfs)
+    
 
 This should produce output roughly like:
 

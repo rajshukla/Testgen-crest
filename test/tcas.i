@@ -3,6 +3,11 @@
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
 # 1 "tcas.c"
+
+
+
+
+
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -833,60 +838,7 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 2 "tcas.c" 2
-# 1 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h" 1 3 4
-# 34 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h" 3 4
-# 1 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h" 1 3 4
-
-
-
-
-
-
-# 1 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h" 1 3 4
-# 168 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h" 3 4
-# 1 "/usr/include/limits.h" 1 3 4
-# 143 "/usr/include/limits.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 1 3 4
-# 160 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 1 3 4
-# 38 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 3 4
-# 1 "/usr/include/linux/limits.h" 1 3 4
-# 39 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 2 3 4
-# 161 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 2 3 4
-# 144 "/usr/include/limits.h" 2 3 4
-
-
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix2_lim.h" 1 3 4
-# 148 "/usr/include/limits.h" 2 3 4
-# 169 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h" 2 3 4
-# 8 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h" 2 3 4
-# 35 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h" 2 3 4
-# 3 "tcas.c" 2
-# 1 "/usr/include/assert.h" 1 3 4
-# 66 "/usr/include/assert.h" 3 4
-
-
-
-extern void __assert_fail (const char *__assertion, const char *__file,
-      unsigned int __line, const char *__function)
-     __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
-
-
-extern void __assert_perror_fail (int __errnum, const char *__file,
-      unsigned int __line, const char *__function)
-     __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
-
-
-
-
-extern void __assert (const char *__assertion, const char *__file, int __line)
-     __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
-
-
-
-# 4 "tcas.c" 2
+# 7 "tcas.c" 2
 # 1 "../bin/../include/crest.h" 1
 # 136 "../bin/../include/crest.h"
 typedef enum {
@@ -937,14 +889,13 @@ extern void __CrestUInt(unsigned int* x) __attribute__((crest_skip));
 extern void __CrestChar(char* x) __attribute__((crest_skip));
 extern void __CrestShort(short* x) __attribute__((crest_skip));
 extern void __CrestInt(int* x) __attribute__((crest_skip));
-# 5 "tcas.c" 2
+# 8 "tcas.c" 2
 
-int nondet_int (void)
-{
-  int nd;
-  return nd;
-}
 
+
+
+
+typedef int bool;
 int Cur_Vertical_Sep;
 int High_Confidence;
 int Two_of_Three_Reports_Valid;
@@ -952,244 +903,134 @@ int Own_Tracked_Alt;
 int Own_Tracked_Alt_Rate;
 int Other_Tracked_Alt;
 int Alt_Layer_Value;
-int Positive_RA_Alt_Thresh_0;
-int Positive_RA_Alt_Thresh_1;
-int Positive_RA_Alt_Thresh_2;
-int Positive_RA_Alt_Thresh_3;
+int Positive_RA_Alt_Thresh[4];
 int Up_Separation;
 int Down_Separation;
+
+
 int Other_RAC;
+
+
+
 int Other_Capability;
+
+
 int Climb_Inhibit;
 
-int costs[999];
-int citer;
 
 
-
-
-
-
-int Own_Below_Threat()
+void initialize()
 {
-  if(Own_Tracked_Alt < Other_Tracked_Alt)
-     return 1;
-  else
-     return 0;
+Positive_RA_Alt_Thresh[0] = 400;
+Positive_RA_Alt_Thresh[1] = 500;
+Positive_RA_Alt_Thresh[2] = 640;
+Positive_RA_Alt_Thresh[3] = 740;
 }
-
-int Own_Above_Threat()
-{
-   if(Other_Tracked_Alt < Own_Tracked_Alt)
-     return 1;
-   else
-     return 0;
-}
-
-int initialize()
-{
-  High_Confidence = 32767;
-  Other_Capability = 0;
-
-  Climb_Inhibit = 1;
-  Cur_Vertical_Sep = 16684;
-  Own_Tracked_Alt_Rate = 450 ;
-
-  ((Own_Tracked_Alt >= 0) ? (void) (0) : __assert_fail ("Own_Tracked_Alt >= 0", "tcas.c", 62, __PRETTY_FUNCTION__));
-  ((Other_Tracked_Alt >= 0) ? (void) (0) : __assert_fail ("Other_Tracked_Alt >= 0", "tcas.c", 63, __PRETTY_FUNCTION__));
-  ((Own_Tracked_Alt_Rate >= 0) ? (void) (0) : __assert_fail ("Own_Tracked_Alt_Rate >= 0", "tcas.c", 64, __PRETTY_FUNCTION__));
-
-  Positive_RA_Alt_Thresh_0 = 16434;
-  Positive_RA_Alt_Thresh_1 = 0;
-  Positive_RA_Alt_Thresh_2 = 0;
-  Positive_RA_Alt_Thresh_3 = 0;
-  return 1;
-}
-
-int Positive_RA_Alt_Thresh(int Alt)
-{
-  __CrestInt(&Alt);
-  int res = 0;
-  if( Alt == 0 )
-    { res = Positive_RA_Alt_Thresh_0; }
-  else if( Alt == 1 )
-    { res = Positive_RA_Alt_Thresh_1; }
-  else if( Alt == 2 )
-    { res = Positive_RA_Alt_Thresh_2; }
- else if( Alt == 3 )
-    { res = Positive_RA_Alt_Thresh_3; }
-  return(res);
-}
-
-
 int ALIM ()
 {
-  return Positive_RA_Alt_Thresh(Alt_Layer_Value);
+return Positive_RA_Alt_Thresh[Alt_Layer_Value];
 }
-
 int Inhibit_Biased_Climb ()
 {
-    if(Climb_Inhibit>=1)
-      return (Up_Separation + 100);
-  else
-   return Up_Separation;
+return (Climb_Inhibit ? Up_Separation + 100 : Up_Separation);
 }
-
-
-
 int Non_Crossing_Biased_Climb()
 {
-  int upward_preferred;
-  int upward_crossing_situation;
-  int result;
-  __CrestInt(&upward_preferred);
-  __CrestInt(&upward_crossing_situation);
-  __CrestInt(&result);
+int upward_preferred;
+int upward_crossing_situation;
+int result;
 
-  if(Inhibit_Biased_Climb() > Down_Separation)
-      upward_preferred = 1;
-  else
-     upward_preferred = 0;
 
-  if (upward_preferred == 1)
-    {
-      if(!(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM()))))
-        result = 1;
-      else
-       result = 0;
-    }
-  else
-    {
-      if(Own_Above_Threat() && (Cur_Vertical_Sep >= 300 ) && (Up_Separation >= ALIM()))
-        result = 1;
-      else
-        result = 0;
-    }
-  return result;
+upward_preferred = Inhibit_Biased_Climb() > Down_Separation;
+if (upward_preferred)
+{
+result = !(Own_Below_Threat()) || ((Own_Below_Threat()) && (!(Down_Separation >= ALIM())));
 }
-
-
-
+else
+{
+result = (Cur_Vertical_Sep >= 300) && (Up_Separation >= ALIM());
+}
+return result;
+}
 int Non_Crossing_Biased_Descend()
 {
-  int upward_preferred;
-  int upward_crossing_situation;
-  int result;
-  __CrestInt(&upward_preferred);
-  __CrestInt(&upward_crossing_situation);
-  __CrestInt(&result);
-  if(Inhibit_Biased_Climb() > Down_Separation)
-    upward_preferred = 1;
-  else
-    upward_preferred = 0;
+int upward_preferred;
+int upward_crossing_situation;
+int result;
+__CrestInt(&Cur_Vertical_Sep);
+__CrestInt(&High_Confidence);
+__CrestInt(&Two_of_Three_Reports_Valid);
+__CrestInt(&Own_Tracked_Alt);
+__CrestInt(&Own_Tracked_Alt_Rate);
+__CrestInt(&Other_Tracked_Alt);
+__CrestInt(&Alt_Layer_Value);
+__CrestInt(&Positive_RA_Alt_Thresh);
+__CrestInt(&Up_Separation);
+__CrestInt(&Down_Separation);
 
-  if (upward_preferred == 1)
-    {
-      if(Own_Below_Threat() && (Cur_Vertical_Sep >= 300 ) && (Down_Separation >= ALIM()))
-           result=1;
-      else
-          result=0;
-    }
-  else
-    {
-      if( !(Own_Above_Threat()) || ((Own_Above_Threat()) && (Up_Separation >= ALIM())))
-        result=1;
-      else
-        result = 0;
-    }
-  return result;
+
+upward_preferred = Inhibit_Biased_Climb() > Down_Separation;
+if (upward_preferred)
+{
+result = Own_Below_Threat() && (Cur_Vertical_Sep >= 300) && (Down_Separation >= ALIM());
 }
-
-
+else
+{
+result = !(Own_Above_Threat()) || ((Own_Above_Threat()) && (Up_Separation >= ALIM()));
+}
+return result;
+}
+int Own_Below_Threat()
+{
+return (Own_Tracked_Alt < Other_Tracked_Alt);
+}
+int Own_Above_Threat()
+{
+return (Other_Tracked_Alt < Own_Tracked_Alt);
+}
 int alt_sep_test()
 {
-  int enabled, tcas_equipped, intent_not_known;
-  int need_upward_RA = 0;
-  int need_downward_RA = 0;
-
-  int alt_sep;
-
-  ((Own_Tracked_Alt >= 300) ? (void) (0) : __assert_fail ("Own_Tracked_Alt >= 300", "tcas.c", 176, __PRETTY_FUNCTION__));
-  ((Other_Tracked_Alt >= 300) ? (void) (0) : __assert_fail ("Other_Tracked_Alt >= 300", "tcas.c", 177, __PRETTY_FUNCTION__));
-  ((Own_Tracked_Alt_Rate >= 300) ? (void) (0) : __assert_fail ("Own_Tracked_Alt_Rate >= 300", "tcas.c", 178, __PRETTY_FUNCTION__));
-
-  if( High_Confidence >= 1 && (Own_Tracked_Alt_Rate <= 600 ) && (Cur_Vertical_Sep > 600 ))
-     enabled = 1;
-  else
-     enabled = 0;
-
-  if(Other_Capability == 1 )
-    tcas_equipped = 1;
-  else
-   tcas_equipped = 0;
-
-
-  if( Two_of_Three_Reports_Valid >= 1 && Other_RAC == 0 )
-    intent_not_known = 1;
-  else
-    intent_not_known = 0;
-
-  alt_sep = 0 ;
-
-  if (enabled>=1 && ((tcas_equipped==1 && intent_not_known==1) || tcas_equipped==0))
-    {
-       if( Non_Crossing_Biased_Climb()==1 && Own_Below_Threat()==1)
-            need_upward_RA = 1;
-       else
-           need_upward_RA = 0;
-
-
-       if(Non_Crossing_Biased_Descend()==1 && Own_Above_Threat()==1)
-           need_downward_RA = 1;
-        else
-           need_downward_RA = 0;
-
-      if(need_upward_RA==1 && need_downward_RA==1)
-        {
-          alt_sep = 0 ;
-        }
-      else
-        if (need_upward_RA == 1)
-          {
-            alt_sep = 1 ;
-
-          }
-        else if (need_downward_RA == 1)
-          {
-            alt_sep = 2 ;
-          }
-        else
-          alt_sep = 0 ;
-    }
-
-  return alt_sep;
-}
-
-
-int main(int argc, char *argv[])
+int enabled, tcas_equipped, intent_not_known;
+int need_upward_RA, need_downward_RA;
+int alt_sep;
+enabled = High_Confidence && (Own_Tracked_Alt_Rate <= 600) && (Cur_Vertical_Sep > 600);
+tcas_equipped = Other_Capability == 1;
+intent_not_known = Two_of_Three_Reports_Valid && Other_RAC == 0;
+alt_sep = 0;
+if (enabled && ((tcas_equipped && intent_not_known) || !tcas_equipped))
 {
-  int res;
-  __CrestInt(&res);
-  Cur_Vertical_Sep = nondet_int ();
-  High_Confidence = nondet_int ();
-  Two_of_Three_Reports_Valid = nondet_int ();
-  Own_Tracked_Alt = nondet_int ();
-  Own_Tracked_Alt_Rate = nondet_int ();
-  Other_Tracked_Alt = nondet_int ();
-  Alt_Layer_Value = nondet_int ();
-  Positive_RA_Alt_Thresh_0 = nondet_int ();
-  Positive_RA_Alt_Thresh_1 = nondet_int ();
-  Positive_RA_Alt_Thresh_2 = nondet_int ();
-  Positive_RA_Alt_Thresh_3 = nondet_int ();
-  Up_Separation = nondet_int ();
-  Down_Separation = nondet_int ();
-  Other_RAC = nondet_int ();
-  Other_Capability = nondet_int ();
-  Climb_Inhibit = nondet_int ();
+need_upward_RA = Non_Crossing_Biased_Climb() && Own_Below_Threat();
+need_downward_RA = Non_Crossing_Biased_Descend() && Own_Above_Threat();
+if (need_upward_RA && need_downward_RA)
 
-  initialize();
 
-  res = alt_sep_test();
 
-  return 0;
+alt_sep = 0;
+else if (need_upward_RA)
+alt_sep = 1;
+else if (need_downward_RA)
+alt_sep = 2;
+else
+alt_sep = 0;
+}
+return alt_sep;
+}
+main(argc, argv)
+int argc;
+char *argv[];
+{
+if(argc < 13)
+{
+fprintf(stdout, "Error: Command line arguments are\n");
+fprintf(stdout, "Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid\n");
+fprintf(stdout, "Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt\n");
+fprintf(stdout, "Alt_Layer_Value, Up_Separation, Down_Separation\n");
+fprintf(stdout, "Other_RAC, Other_Capability, Climb_Inhibit\n");
+
+}
+initialize();
+
+
+
+
 }

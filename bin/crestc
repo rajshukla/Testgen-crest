@@ -4,12 +4,12 @@ set -e
 
 DIR=`dirname $0`/..
 CILLY=${DIR}/cil/bin/cilly
-
+file_name=$(echo $1|sed 's/\(.*\)\.c/\1/')
 TARGET=`expr $1 : '\(.*\)\.c'`
 
 rm -f idcount stmtcount funcount cfg_func_map cfg branches cfg_branches
 
-${CILLY} $1 -o ${TARGET} --save-temps --doloopUnroll --dolevel_struct --doCrestInstrument \
+${CILLY} $1 -o ${TARGET} --save-temps --doParam --param_file=$file_name --doloopUnroll --domakeCDG --dolevel_struct --doCrestInstrument \
     -I${DIR}/include -L${DIR}/lib -lcrest -lstdc++
 
 ${DIR}/bin/process_cfg

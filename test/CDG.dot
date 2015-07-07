@@ -1,0 +1,19 @@
+digraph CDG {
+ENTRY -> 1
+2 [shape=diamond, color=red]
+ENTRY -> 2
+3 [shape=diamond, color=red]
+2-> 3
+ENTRY -> 7
+4 [shape=diamond, color=red]
+3-> 4
+ENTRY -> 7
+5 [shape=diamond, color=red]
+4-> 5
+ENTRY -> 7
+5-> 6
+ENTRY -> 7
+ENTRY -> 7
+ENTRY -> 8
+}
+

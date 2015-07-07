@@ -104,7 +104,9 @@ let features : C.featureDescr list =
     Logcalls.feature;
     Ptranal.feature;
     Liveness.feature;
+    Param.feature;
     LoopUnroll.feature;
+    MakeCDG.feature;
     Level_struct.feature;
     CrestInstrument.feature;
   ] 

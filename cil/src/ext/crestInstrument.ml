@@ -511,6 +511,12 @@ let feature : featureDescr =
           *  - simplifying expressions with complex memory references
           *  - converting loops and switches into goto's and if's
           *  - transforming functions to have exactly one return *)
+          let funname = !Param.func
+          in
+          let doGlobal = function
+          |GFun (fdec, loc) ->
+           if fdec.svar.vname = funname then
+           begin
           Simplemem.feature.fd_doit f ;
           iterGlobals f prepareGlobalForCFG ;
           Oneret.feature.fd_doit f ;
@@ -545,5 +551,9 @@ let feature : featureDescr =
           writeStmtCount () ;
           writeFunCount () ;
           writeBranches () ;
-          writeonlyBranches());
+          writeonlyBranches();
+          end
+          | _ -> ()
+          in
+          Stats.time "crestInstrument" (iterGlobals f) doGlobal );
   }

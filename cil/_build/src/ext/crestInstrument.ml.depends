@@ -1,1 +1,1 @@
-src/ext/crestInstrument.ml: Cfg Cil List Oneret Printf Scanf Simplemem
+src/ext/crestInstrument.ml: Cfg Cil List Oneret Param Printf Scanf Simplemem Stats

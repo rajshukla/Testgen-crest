@@ -16,6 +16,7 @@ let levelH : (int, int) Hashtbl.t = (Hashtbl.create 100)
 (* Hash table for mapping child id to parent id *)
 let parH : (int, int) Hashtbl.t = (Hashtbl.create 100)
 let file = "level.txt"
+let line_number_file = "line_number.txt"
 let leftStmt = ref dummyStmt
 let parentExp = ref ""
 let parentId = ref 0
@@ -65,6 +66,9 @@ let rec fixStmt (s:stmt) (st:string) : unit =
      let oc = open_append file in    
      fprintf oc "%d %d\n" s.sid (Hashtbl.find levelH s.sid);
      close_out oc ;
+     let oc = open_append line_number_file in    
+     fprintf oc "%d \n"l.line;
+     close_out oc ;
      List.iter testing tb.bstmts;
      List.iter testing fb.bstmts;
 
@@ -80,6 +84,9 @@ let rec fixStmt (s:stmt) (st:string) : unit =
      let oc = open_append file in    
      fprintf oc "%d %d\n"s.sid (Hashtbl.find levelH s.sid);
      close_out oc ;
+     let oc = open_append line_number_file in    
+     fprintf oc "%d \n"l.line;
+     close_out oc ;
      List.iter testing tb.bstmts;
      List.iter testing fb.bstmts;
 
@@ -94,6 +101,9 @@ let rec fixStmt (s:stmt) (st:string) : unit =
      levellist := !levellist @ [(Hashtbl.find levelH s.sid)];
      let oc = open_append file in    
      fprintf oc "%d %d\n" s.sid (Hashtbl.find levelH s.sid);
+     close_out oc ;
+     let oc = open_append line_number_file in    
+     fprintf oc "%d \n"l.line;
      close_out oc ;
      testNesting := 0 ;
      List.iter testing tb.bstmts;
@@ -170,6 +180,9 @@ let rec level_structFixFunction (s : stmt) : unit =
      let oc = open_append file in    
      fprintf oc "%d %d\n"s.sid (Hashtbl.find levelH s.sid);
      close_out oc ;
+     let oc = open_append line_number_file in    
+     fprintf oc "%d \n"l.line;
+     close_out oc ;
      level_structFixStmt s
 
   | If(BinOp(op ,CastE( t1 , e1) ,e2 , t3),tb,fb,l)-> 
@@ -180,6 +193,9 @@ let rec level_structFixFunction (s : stmt) : unit =
      let oc = open_append file in    
      fprintf oc "%d %d\n" s.sid (Hashtbl.find levelH s.sid);
      close_out oc ;
+     let oc = open_append line_number_file in    
+     fprintf oc "%d \n"l.line;
+     close_out oc ;
      level_structFixStmt s
 
   | If(e,tb,fb,l) ->
@@ -189,6 +205,9 @@ let rec level_structFixFunction (s : stmt) : unit =
      levellist := !levellist @ [(Hashtbl.find levelH s.sid)];
      let oc = open_append file in    
      fprintf oc "%d %d\n" s.sid (Hashtbl.find levelH s.sid);
+     close_out oc ;
+     let oc = open_append line_number_file in    
+     fprintf oc "%d \n"l.line;
      close_out oc ;
      level_structFixStmt s
 

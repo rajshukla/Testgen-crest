@@ -400,83 +400,6 @@ bool Search::CheckPrediction(const SymbolicExecution& old_ex,
 
 /////GivenTestCases ///////////////////////////////////////////////////
 
-GivenTestCases::GivenTestCases(const string& program, int max_iterations,int givenTest) : Search(program,max_iterations) , givenTest_(givenTest) {}
-
-GivenTestCases::~GivenTestCases(){}
-
-void GivenTestCases::Run(){
-
-/*
-  FILE* check=fopen("check2","w");
-  fprintf(check,"22got onto GivenTestCases, Given:- %d",givenTest_);
-  fclose(check);*/
-  flagNotGiven=0; //indicates that GivenTestCases is called
-
-  givenTestFiles=givenTest_;
-  vector<value_t> input;
-  RunProgram(input, &ex_);
-  givenCounter++;
-
-  while (givenCounter<=givenTestFiles) {
-    char fGname[32];
-    snprintf(fGname, 32, "given.%d", givenCounter);
-    //take input from given files and assign it PROPERLY in input vector
-    FILE* fgiven = fopen(fGname, "r");
-    if (!fgiven) {
-      fprintf(stderr, "Failed to open %s.\n", fGname);
-      perror("Error: ");
-      exit(-1);
-    }
-
-    //assign inputs properly to input vector
-    // ex_.vars()
-    // map<var_t,type_t>& vars
-    input.resize(ex_.vars().size());
-
-  for (map<var_t,type_t>::const_iterator it = ex_.vars().begin(); it != ex_.vars().end(); ++it) {
-    unsigned long long val = 0;
-    /*for (size_t j = 0; j < 8; j++)
-      val = (val << 8) + (rand() / 256);*/
-
-    int numFound=fscanf(fgiven, "%lld\n", &val);
-    if(numFound!=1) fprintf(stderr,"\nERROR in taking input from given test case files!!\n");
-
-    switch (it->second) {
-    case types::U_CHAR:
-      input.at(it->first) = (unsigned char)val; break;
-    case types::CHAR:
-      input.at(it->first) = (char)val; break;
-    case types::U_SHORT:
-      input.at(it->first) = (unsigned short)val; break;
-    case types::SHORT:
-      input.at(it->first) = (short)val; break;
-    case types::U_INT:
-      input.at(it->first) = (unsigned int)val; break;
-    case types::INT:
-      input.at(it->first) = (int)val; break;
-    case types::U_LONG:
-      input.at(it->first) = (unsigned long)val; break;
-    case types::LONG:
-      input.at(it->first) = (long)val; break;
-    case types::U_LONG_LONG:
-      input.at(it->first) = (unsigned long long)val; break;
-    case types::LONG_LONG:
-      input.at(it->first) = (long long)val; break;
-    }
-  }
-
-    /*for (size_t i = 0; i < input.size(); i++) {
-      fscanf(fgiven, "%lld\n", input[i]);
-    }
-*/
-    fclose(fgiven);
-
-    RunProgram(input, &ex_);
-    givenCounter++; 
-    UpdateCoverage(ex_);
-  }
-
-}
 
 
 
@@ -1504,19 +1427,93 @@ bool CfgHeuristicSearch::DoBoundedBFS(int i, int depth, const SymbolicExecution&
 ////////////////////LevelSearch (One by one flipping)///////////////
 ////////////////////////////////////////////////////////////////////
 
+
+
+
 LevelSearch_::LevelSearch_
-(const string& program, int max_iterations)
-  : Search(program, max_iterations) { }
+(const string& program, int max_iterations, int givenTest)
+  : Search(program,max_iterations) , givenTest_(givenTest) { }
 
 LevelSearch_::~LevelSearch_() { }
 
 void LevelSearch_::Run() {
-  // Initial execution (on empty/random inputs).
-  SymbolicExecution ex;
-  RunProgram(vector<value_t>(), &ex);
-  UpdateCoverage(ex);
 
-  Level(0 , ex);
+   /*
+  FILE* check=fopen("check2","w");
+  fprintf(check,"22got onto GivenTestCases, Given:- %d",givenTest_);
+  fclose(check);*/
+  flagNotGiven=0; //indicates that GivenTestCases is called
+
+  givenTestFiles=givenTest_;
+  vector<value_t> input;
+  RunProgram(input, &ex_);
+  givenCounter++;
+
+  while (givenCounter<=givenTestFiles) {
+    char fGname[32];
+    snprintf(fGname, 32, "given.%d", givenCounter);
+    //take input from given files and assign it PROPERLY in input vector
+    FILE* fgiven = fopen(fGname, "r");
+    if (!fgiven) {
+      fprintf(stderr, "Failed to open %s.\n", fGname);
+      perror("Error: ");
+      exit(-1);
+    }
+
+    //assign inputs properly to input vector
+    // ex_.vars()
+    // map<var_t,type_t>& vars
+    input.resize(ex_.vars().size());
+
+  for (map<var_t,type_t>::const_iterator it = ex_.vars().begin(); it != ex_.vars().end(); ++it) {
+    unsigned long long val = 0;
+    /*for (size_t j = 0; j < 8; j++)
+      val = (val << 8) + (rand() / 256);*/
+
+    int numFound=fscanf(fgiven, "%lld\n", &val);
+    if(numFound!=1) fprintf(stderr,"\nERROR in taking input from given test case files!!\n");
+
+    switch (it->second) {
+    case types::U_CHAR:
+      input.at(it->first) = (unsigned char)val; break;
+    case types::CHAR:
+      input.at(it->first) = (char)val; break;
+    case types::U_SHORT:
+      input.at(it->first) = (unsigned short)val; break;
+    case types::SHORT:
+      input.at(it->first) = (short)val; break;
+    case types::U_INT:
+      input.at(it->first) = (unsigned int)val; break;
+    case types::INT:
+      input.at(it->first) = (int)val; break;
+    case types::U_LONG:
+      input.at(it->first) = (unsigned long)val; break;
+    case types::LONG:
+      input.at(it->first) = (long)val; break;
+    case types::U_LONG_LONG:
+      input.at(it->first) = (unsigned long long)val; break;
+    case types::LONG_LONG:
+      input.at(it->first) = (long long)val; break;
+    }
+  }
+
+    /*for (size_t i = 0; i < input.size(); i++) {
+      fscanf(fgiven, "%lld\n", input[i]);
+    }
+*/
+    fclose(fgiven);
+
+    RunProgram(input, &ex_);
+    givenCounter++; 
+    UpdateCoverage(ex_);
+  }
+
+  // Initial execution (on empty/random inputs).
+  //SymbolicExecution ex;
+  //RunProgram(vector<value_t>(), &ex);
+  //UpdateCoverage(ex);
+
+  Level(0 , ex_);
   // DFS(0, ex);
 }
 
@@ -1590,19 +1587,90 @@ printf("\n####Level =%d\n", level) ;
 ///////////////////////////////////////////////////
 
 LevelSearch::LevelSearch
-(const string& program, int max_iterations)
-  : Search(program, max_iterations) { }
+(const string& program, int max_iterations, int givenTest)
+  : Search(program,max_iterations) , givenTest_(givenTest) { }
 
 LevelSearch::~LevelSearch() { }
 
 void LevelSearch::Run() {
-  // Initial execution (on empty/random inputs).
-  SymbolicExecution ex;
-  vector<value_t> input;
-  RunProgram(input, &ex);
-  UpdateCoverage(ex);
+  
 
-  Level(1, ex);
+  /*
+  FILE* check=fopen("check2","w");
+  fprintf(check,"22got onto GivenTestCases, Given:- %d",givenTest_);
+  fclose(check);*/
+  flagNotGiven=0; //indicates that GivenTestCases is called
+
+  givenTestFiles=givenTest_;
+  vector<value_t> input;
+  RunProgram(input, &ex_);
+  givenCounter++;
+
+  while (givenCounter<=givenTestFiles) {
+    char fGname[32];
+    snprintf(fGname, 32, "given.%d", givenCounter);
+    //take input from given files and assign it PROPERLY in input vector
+    FILE* fgiven = fopen(fGname, "r");
+    if (!fgiven) {
+      fprintf(stderr, "Failed to open %s.\n", fGname);
+      perror("Error: ");
+      exit(-1);
+    }
+
+    //assign inputs properly to input vector
+    // ex_.vars()
+    // map<var_t,type_t>& vars
+    input.resize(ex_.vars().size());
+
+  for (map<var_t,type_t>::const_iterator it = ex_.vars().begin(); it != ex_.vars().end(); ++it) {
+    unsigned long long val = 0;
+    /*for (size_t j = 0; j < 8; j++)
+      val = (val << 8) + (rand() / 256);*/
+
+    int numFound=fscanf(fgiven, "%lld\n", &val);
+    if(numFound!=1) fprintf(stderr,"\nERROR in taking input from given test case files!!\n");
+
+    switch (it->second) {
+    case types::U_CHAR:
+      input.at(it->first) = (unsigned char)val; break;
+    case types::CHAR:
+      input.at(it->first) = (char)val; break;
+    case types::U_SHORT:
+      input.at(it->first) = (unsigned short)val; break;
+    case types::SHORT:
+      input.at(it->first) = (short)val; break;
+    case types::U_INT:
+      input.at(it->first) = (unsigned int)val; break;
+    case types::INT:
+      input.at(it->first) = (int)val; break;
+    case types::U_LONG:
+      input.at(it->first) = (unsigned long)val; break;
+    case types::LONG:
+      input.at(it->first) = (long)val; break;
+    case types::U_LONG_LONG:
+      input.at(it->first) = (unsigned long long)val; break;
+    case types::LONG_LONG:
+      input.at(it->first) = (long long)val; break;
+    }
+  }
+
+    /*for (size_t i = 0; i < input.size(); i++) {
+      fscanf(fgiven, "%lld\n", input[i]);
+    }
+*/
+    fclose(fgiven);
+
+    RunProgram(input, &ex_);
+    givenCounter++; 
+    UpdateCoverage(ex_);
+  }
+
+  // Initial execution (on empty/random inputs).
+  //SymbolicExecution ex;
+  //RunProgram(vector<value_t>(), &ex);
+  //UpdateCoverage(ex);
+
+  Level(1, ex_);
 }
 
 bool LevelSearch::Solve(const SymbolicExecution& ex, int level ,vector<value_t>* input ){

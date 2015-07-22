@@ -1,9 +1,8 @@
-
 mkdir $4
-cp $1 $4/$1
+cp $1 $4/$(basename $1)
 
 cd $4
-file_name=$1
+file_name=$(basename $1)
 
 #removing previous results
 rm resultAfter.txt
@@ -12,6 +11,7 @@ rm coverage
 rm level.txt
 rm maxLevel.txt
 rm branches_to_map
+rm line_number.txt
 
 #running
 ../bin/crestc $file_name
@@ -21,7 +21,8 @@ file_name=$(echo $file_name|sed 's/\(.*\)\.c/\1/')
 ../bin/run_crest ./$file_name $2 -$3 $4
 
 #to save the results in a spreadsheet
-python ../src/results/results.py $file_name $2 $3 $4
+#python ../src/results/results.py $file_name $2 $3 $4
+../src/results/line.sh
 
 
 cd ..

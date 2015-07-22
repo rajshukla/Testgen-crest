@@ -13,7 +13,7 @@ extern void __CrestApply1(int id , int op , long long val )  __attribute__((__cr
 extern void __CrestClearStack(int id )  __attribute__((__crest_skip__)) ;
 extern void __CrestStore(int id , unsigned long addr )  __attribute__((__crest_skip__)) ;
 extern void __CrestLoad(int id , unsigned long addr , long long val )  __attribute__((__crest_skip__)) ;
-#line 202 "../bin/../include/crest.h"
+#line 203 "../bin/../include/crest.h"
 extern void __CrestInt(int *x )  __attribute__((__crest_skip__)) ;
 #line 362 "/usr/include/stdio.h"
 extern int printf(char const   * __restrict  __format  , ...) ;
@@ -165,6 +165,32 @@ void i(int a )
   }
 }
 }
+void createCDG(void) 
+{ 
+
+
+  {
+  __CrestCall(45, 5);
+
+  {
+  __CrestReturn(46);
+  return;
+  }
+}
+}
+void isCopyOfHolder(void) 
+{ 
+
+
+  {
+  __CrestCall(47, 6);
+
+  {
+  __CrestReturn(48);
+  return;
+  }
+}
+}
 #line 55 "cfg_test.c"
 int main(void) 
 { 
@@ -173,53 +199,53 @@ int main(void)
 
   {
   __globinit_cfg_test();
-  __CrestCall(45, 5);
+  __CrestCall(49, 7);
 #line 57
   __CrestInt(& a);
-  __CrestLoad(48, (unsigned long )(& a), (long long )a);
-  __CrestLoad(47, (unsigned long )0, (long long )19);
-  __CrestApply2(46, 12, (long long )(a == 19));
+  __CrestLoad(52, (unsigned long )(& a), (long long )a);
+  __CrestLoad(51, (unsigned long )0, (long long )19);
+  __CrestApply2(50, 12, (long long )(a == 19));
 #line 59
   if (a == 19) {
-    __CrestBranch(49, 25, 1);
+    __CrestBranch(53, 27, 1);
 #line 60
     printf((char const   * __restrict  )"19\n");
-    __CrestClearStack(51);
+    __CrestClearStack(55);
   } else {
-    __CrestBranch(50, 26, 0);
+    __CrestBranch(54, 28, 0);
 #line 62
     printf((char const   * __restrict  )"not 19\n");
-    __CrestClearStack(52);
+    __CrestClearStack(56);
   }
-  __CrestLoad(53, (unsigned long )(& a), (long long )a);
+  __CrestLoad(57, (unsigned long )(& a), (long long )a);
 #line 65
   f(a);
-  __CrestClearStack(54);
-  __CrestLoad(55, (unsigned long )(& a), (long long )a);
+  __CrestClearStack(58);
+  __CrestLoad(59, (unsigned long )(& a), (long long )a);
 #line 67
   g(a);
-  __CrestClearStack(56);
-  __CrestLoad(59, (unsigned long )(& a), (long long )a);
-  __CrestLoad(58, (unsigned long )0, (long long )1);
-  __CrestApply2(57, 13, (long long )(a != 1));
+  __CrestClearStack(60);
+  __CrestLoad(63, (unsigned long )(& a), (long long )a);
+  __CrestLoad(62, (unsigned long )0, (long long )1);
+  __CrestApply2(61, 13, (long long )(a != 1));
 #line 69
   if (a != 1) {
-    __CrestBranch(60, 29, 1);
+    __CrestBranch(64, 31, 1);
 #line 70
     printf((char const   * __restrict  )"not 1\n");
-    __CrestClearStack(62);
+    __CrestClearStack(66);
   } else {
-    __CrestBranch(61, 30, 0);
+    __CrestBranch(65, 32, 0);
 #line 72
     printf((char const   * __restrict  )"1\n");
-    __CrestClearStack(63);
+    __CrestClearStack(67);
   }
-  __CrestLoad(64, (unsigned long )0, (long long )0);
-  __CrestStore(65, (unsigned long )(& __retres2));
+  __CrestLoad(68, (unsigned long )0, (long long )0);
+  __CrestStore(69, (unsigned long )(& __retres2));
 #line 75
   __retres2 = 0;
-  __CrestLoad(66, (unsigned long )(& __retres2), (long long )__retres2);
-  __CrestReturn(67);
+  __CrestLoad(70, (unsigned long )(& __retres2), (long long )__retres2);
+  __CrestReturn(71);
 #line 55
   return (__retres2);
 }

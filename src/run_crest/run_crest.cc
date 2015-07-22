@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   gettimeofday(&tv, NULL);
   srand((tv.tv_sec * 1000000) + tv.tv_usec);
 
-  if(argc>=5){
+ /* if(argc>=5){
 
     givenTest=atoi(argv[4]);
     
@@ -44,13 +44,17 @@ int main(int argc, char* argv[]) {
     crest::Search* test=new crest::GivenTestCases(prog, num_iters,givenTest);
     test->Run();
     delete test;
-  }
+  }*/
 
   crest::Search* strategy;
-  if (search_type == "-level_search"){
-    strategy = new crest ::LevelSearch_(prog, num_iters);}
+  if (search_type == "-cdg"){
+    }//strategy = new crest ::GivenTestCases(prog, num_iters, givenTest);}
+  else if (search_type == "-level_search"){
+    givenTest=atoi(argv[4]);
+    strategy = new crest ::LevelSearch_(prog, num_iters,givenTest);}
   else if (search_type == "-level"){
-    strategy = new crest::LevelSearch(prog, num_iters);}
+    givenTest=atoi(argv[4]);
+    strategy = new crest::LevelSearch(prog, num_iters, givenTest);}
   else if (search_type == "-random") {
     strategy = new crest::RandomSearch(prog, num_iters);
   } else if (search_type == "-random_input") {

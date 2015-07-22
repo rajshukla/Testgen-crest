@@ -201,19 +201,7 @@ class LeastRunSearch : public Search {
 };
 */
 
-class GivenTestCases : public Search {
-public:
-  GivenTestCases(const string& program, int max_iterations,int givenTest);
 
-  virtual ~GivenTestCases();
-
-  virtual void Run();
-
-private:
-  SymbolicExecution ex_;
-  int givenTest_;
-
-};
 
 class CfgBaselineSearch : public Search {
  public:
@@ -294,14 +282,21 @@ class CfgHeuristicSearch : public Search {
 
 class LevelSearch_ : public Search {
  public:
-  explicit LevelSearch_(const string& program,
-				   int max_iterations);
+  explicit LevelSearch_( const string& program, int max_iterations,int givenTest);
+				  
 				   
   virtual ~LevelSearch_();
+
+  //GivenTestCases(const string& program, int max_iterations,int givenTest);
+
+  //virtual ~GivenTestCases();
 
   virtual void Run();
 
  private:
+
+ SymbolicExecution ex_;
+ int givenTest_;
   
 
   void Level(size_t pos, SymbolicExecution& prev_ex);
@@ -310,13 +305,18 @@ class LevelSearch_ : public Search {
 class LevelSearch : public Search {
  public:
   explicit LevelSearch(const string& program,
-           int max_iterations);
+           int max_iterations, int givenTest);
            
   virtual ~LevelSearch();
+
+  
 
   virtual void Run();
 
  private:
+
+ SymbolicExecution ex_;
+ int givenTest_;
   
 
   void Level(int lev, SymbolicExecution& prev_ex);
